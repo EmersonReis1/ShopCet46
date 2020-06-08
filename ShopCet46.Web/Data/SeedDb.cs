@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ShopCet46.Web.Data.Entities;
+﻿using ShopCet46.Web.Data.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,8 +32,8 @@ namespace ShopCet46.Web.Data
 
         private void AddProduct(string name)
         {
-            _context.Products.Add(new Product 
-            { 
+            _context.Products.Add(new Product
+            {
                 Name = name,
                 Price = _random.Next(500),
                 IsAvailable = true,
