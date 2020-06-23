@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopCet46.Web.Data.Entities;
+using ShopCet46.Web.Data;
+
 
 namespace ShopCet46.Web.Migrations
 {

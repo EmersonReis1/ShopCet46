@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopCet46.Web.Data.Entities
 {
-    public class Product
+    public class Product : IEntity
     {
         public int Id { get; set; }
 
-        [MaxLength(50, ErrorMessage ="The field {0} only can contains {1} characters length.")]
+        [MaxLength(50, ErrorMessage = "The field {0} only can contains {1} characters length.")]
         [Required]
         public string Name { get; set; }
 
@@ -28,5 +28,7 @@ namespace ShopCet46.Web.Data.Entities
 
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public double Stock { get; set; }
+
+        public User User { get; set; }
     }
 }

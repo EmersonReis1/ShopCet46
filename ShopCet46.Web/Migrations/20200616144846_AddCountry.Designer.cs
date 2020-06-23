@@ -10,8 +10,8 @@ using ShopCet46.Web.Data;
 namespace ShopCet46.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200605155404_ModifyProducts")]
-    partial class ModifyProducts
+    [Migration("20200616144846_AddCountry")]
+    partial class AddCountry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,19 @@ namespace ShopCet46.Web.Migrations
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ShopCet46.Web.Data.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
 
             modelBuilder.Entity("ShopCet46.Web.Data.Entities.Product", b =>
                 {
