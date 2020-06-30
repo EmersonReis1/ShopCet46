@@ -30,5 +30,18 @@ namespace ShopCet46.Web.Data.Entities
         public double Stock { get; set; }
 
         public User User { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://shopcet46webemerson.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
     }
 }
