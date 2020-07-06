@@ -49,6 +49,8 @@ namespace ShopCet46.Web
             //services.AddSingleton -- fica sempre instanciado
             //services.AddScoped -- cria um objeto, quando criar outra vez apaga e cria denovo 
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
 
@@ -79,6 +81,7 @@ namespace ShopCet46.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
