@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using ShopCet46.Web.Data.Entities;
 using ShopCet46.Web.Helpers;
 using ShopCet46.Web.Models;
 using System;
@@ -52,6 +54,57 @@ namespace ShopCet46.Web.Controllers
         {
             await _userHelper.LogoutAsync();
             return this.RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Register()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterNewUserViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var user = await this._userHelper.GetUserByEmailAsync(model.UserName);
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        FristName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.UserName,
+                        UserName = model.UserName
+                    };
+
+                    var result = await this._userHelper.AddUserAsync(user, model.UserName);
+                    if (result != IdentityResult.Success)
+                    {
+                        this.ModelState.AddModelError(string.Empty, "The user couldn´t be created.");
+                        return this.View(model);
+                    }
+
+                    var loginViewModel = new LoginViewModel
+                    {
+                        Password = model.Password,
+                        RememberMe = false,
+                        Username = model.UserName
+                    };
+
+                    var result2 = await this._userHelper.LoginAsync(loginViewModel);
+                    if (result.Succeeded)
+                    {
+                        return this.RedirectToAction("Index", "Home");
+                    }
+
+                    this.ModelState.AddModelError(string.Empty, "The user couldn´t be login.");
+                    return this.View(model);
+                }
+
+                this.ModelState.AddModelError(string.Empty, "The username is already registerd.");
+
+            }
+            return this.View(model);
         }
     }
 }
