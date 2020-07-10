@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ShopCet46.Web.Data;
 using ShopCet46.Web.Data.Entities;
 using ShopCet46.Web.Helpers;
+using System.Text;
 
 namespace ShopCet46.Web
 {
@@ -36,7 +38,19 @@ namespace ShopCet46.Web
                 cfg.Password.RequiredLength = 6;
             })
             .AddEntityFrameworkStores<DataContext>();
-            
+
+            services.AddAuthentication()
+                .AddCookie().AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = this.Configuration["Tokens:Issuer"],
+                        ValidAudience = this.Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                    };
+                });
+
 
             services.AddDbContext<DataContext>(cfg =>
             {
